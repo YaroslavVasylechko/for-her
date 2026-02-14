@@ -120,7 +120,7 @@ export default function Quiz({ onComplete }: QuizProps) {
   const [currentQ, setCurrentQ] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
   const [showPhoto, setShowPhoto] = useState(false)
-  const [photoIndex, setPhotoIndex] = useState(0)
+  const [photoIndices, setPhotoIndices] = useState<[number, number]>([0, 1])
 
   const fireConfetti = useCallback(() => {
     confetti({
@@ -140,9 +140,12 @@ export default function Quiz({ onComplete }: QuizProps) {
       fireConfetti()
     }
 
-    // Show a random photo sometimes
-    if (Math.random() > 0.5 && currentQ < questions.length - 1) {
-      setPhotoIndex(Math.floor(Math.random() * photoFiles.length))
+    // Show two random photos after each answer (except the last question)
+    if (currentQ < questions.length - 1) {
+      const first = Math.floor(Math.random() * photoFiles.length)
+      let second = Math.floor(Math.random() * (photoFiles.length - 1))
+      if (second >= first) second++
+      setPhotoIndices([first, second])
       setShowPhoto(true)
       setTimeout(() => setShowPhoto(false), 2500)
     }
@@ -263,30 +266,50 @@ export default function Quiz({ onComplete }: QuizProps) {
         </motion.div>
       </AnimatePresence>
 
-      {/* Floating Polaroid photo */}
+      {/* Floating Polaroid photos */}
       <AnimatePresence>
         {showPhoto && (
           <motion.div
-            className="fixed z-40 pointer-events-none"
+            className="fixed z-40 pointer-events-none flex gap-4 items-start"
             style={{
               top: '15%',
               right: '5%',
             }}
-            initial={{ opacity: 0, scale: 0.3, rotate: -15 }}
-            animate={{ opacity: 1, scale: 1, rotate: Math.random() * 10 - 5 }}
+            initial={{ opacity: 0, scale: 0.3 }}
+            animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5, y: 30 }}
             transition={{ type: 'spring', stiffness: 200, damping: 20 }}
           >
-            <div className="bg-white p-2 pb-8 shadow-2xl rounded-sm w-40 md:w-52">
-              <img
-                src={photoFiles[photoIndex]}
-                alt="Our memory"
-                className="w-full aspect-square object-cover rounded-sm"
-              />
-              <p className="text-center font-display text-xs text-warm-gray mt-1 italic">
-                наши моменты 💕
-              </p>
-            </div>
+            <motion.div
+              initial={{ rotate: -8 }}
+              animate={{ rotate: -6 }}
+            >
+              <div className="bg-white p-2 pb-10 shadow-2xl rounded-sm w-52 md:w-64">
+                <img
+                  src={photoFiles[photoIndices[0]]}
+                  alt="Our memory"
+                  className="w-full aspect-square object-cover rounded-sm"
+                />
+                <p className="text-center font-display text-sm text-warm-gray mt-1 italic">
+                  наши моменты 💕
+                </p>
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ rotate: 8 }}
+              animate={{ rotate: 5 }}
+            >
+              <div className="bg-white p-2 pb-10 shadow-2xl rounded-sm w-52 md:w-64">
+                <img
+                  src={photoFiles[photoIndices[1]]}
+                  alt="Our memory"
+                  className="w-full aspect-square object-cover rounded-sm"
+                />
+                <p className="text-center font-display text-sm text-warm-gray mt-1 italic">
+                  наши моменты 💕
+                </p>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
