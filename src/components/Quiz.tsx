@@ -92,27 +92,28 @@ const questions: Question[] = [
 ]
 
 // Floating photo that appears randomly
+const base = import.meta.env.BASE_URL
 const photoFiles = [
-  '/our-photos/photo_5224456867092828974_y.jpg',
-  '/our-photos/photo_5224456867092828975_y.jpg',
-  '/our-photos/photo_5224456867092828976_y.jpg',
-  '/our-photos/photo_5224456867092828977_y.jpg',
-  '/our-photos/photo_5224456867092828978_y.jpg',
-  '/our-photos/photo_5224456867092828979_y.jpg',
-  '/our-photos/photo_5224456867092828980_y.jpg',
-  '/our-photos/photo_5224456867092828981_y.jpg',
-  '/our-photos/photo_5224456867092828982_y.jpg',
-  '/our-photos/photo_5224456867092828983_y.jpg',
-  '/our-photos/photo_5224456867092828984_y.jpg',
-  '/our-photos/photo_5224456867092828985_y.jpg',
-  '/our-photos/photo_5224456867092828986_y.jpg',
-  '/our-photos/photo_5224456867092828987_y.jpg',
-  '/our-photos/photo_5224456867092828988_y.jpg',
-  '/our-photos/photo_5224456867092828989_y.jpg',
-  '/our-photos/photo_5224456867092828990_y.jpg',
-  '/our-photos/photo_5224456867092828991_y.jpg',
-  '/our-photos/photo_5224456867092828992_y.jpg',
-  '/our-photos/photo_5224456867092828993_y.jpg',
+  `${base}our-photos/photo_5224456867092828974_y.jpg`,
+  `${base}our-photos/photo_5224456867092828975_y.jpg`,
+  `${base}our-photos/photo_5224456867092828976_y.jpg`,
+  `${base}our-photos/photo_5224456867092828977_y.jpg`,
+  `${base}our-photos/photo_5224456867092828978_y.jpg`,
+  `${base}our-photos/photo_5224456867092828979_y.jpg`,
+  `${base}our-photos/photo_5224456867092828980_y.jpg`,
+  `${base}our-photos/photo_5224456867092828981_y.jpg`,
+  `${base}our-photos/photo_5224456867092828982_y.jpg`,
+  `${base}our-photos/photo_5224456867092828983_y.jpg`,
+  `${base}our-photos/photo_5224456867092828984_y.jpg`,
+  `${base}our-photos/photo_5224456867092828985_y.jpg`,
+  `${base}our-photos/photo_5224456867092828986_y.jpg`,
+  `${base}our-photos/photo_5224456867092828987_y.jpg`,
+  `${base}our-photos/photo_5224456867092828988_y.jpg`,
+  `${base}our-photos/photo_5224456867092828989_y.jpg`,
+  `${base}our-photos/photo_5224456867092828990_y.jpg`,
+  `${base}our-photos/photo_5224456867092828991_y.jpg`,
+  `${base}our-photos/photo_5224456867092828992_y.jpg`,
+  `${base}our-photos/photo_5224456867092828993_y.jpg`,
 ]
 
 export default function Quiz({ onComplete }: QuizProps) {
