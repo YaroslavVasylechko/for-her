@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import confetti from 'canvas-confetti'
+import { soundManager } from '../utils/soundManager'
 
 interface LoveAlgorithmProps {
   onYes: () => void
@@ -68,6 +69,13 @@ export default function LoveAlgorithm({ onYes }: LoveAlgorithmProps) {
     terminalLines.forEach((line, i) => {
       const timer = setTimeout(() => {
         setVisibleLines(i + 1)
+        if (line.text.length > 0) {
+          if (line.text.includes('exception') || line.text.includes('be_my_valentine')) {
+            soundManager.play('errorBeep')
+          } else if (!line.text.includes('═') && !line.text.includes('match_score') && !line.text.includes('stability') && !line.text.includes('uptime') && !line.text.includes('cuddle_queue') && !line.text.includes('missing')) {
+            soundManager.play('typeClick')
+          }
+        }
         if (i === terminalLines.length - 1) {
           setTimeout(() => setShowButtons(true), 600)
         }
@@ -103,6 +111,7 @@ export default function LoveAlgorithm({ onYes }: LoveAlgorithmProps) {
       y: Math.max(-maxY, Math.min(maxY, randY)),
     })
 
+    soundManager.play('noWhoosh')
     setNoRunCount(prev => prev + 1)
   }, [])
 
@@ -128,6 +137,8 @@ export default function LoveAlgorithm({ onYes }: LoveAlgorithmProps) {
     }
 
     frame()
+    soundManager.play('victoryChime')
+    soundManager.play('confettiPop')
     setTimeout(onYes, 2000)
   }, [onYes])
 

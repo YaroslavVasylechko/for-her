@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import confetti from 'canvas-confetti'
 import clsx from 'clsx'
+import { soundManager } from '../utils/soundManager'
 
 interface QuizProps {
   onComplete: () => void
@@ -138,6 +139,9 @@ export default function Quiz({ onComplete }: QuizProps) {
     const q = questions[currentQ]
     if (q.correctIndex === -1 || index === q.correctIndex) {
       fireConfetti()
+      soundManager.play('quizCorrect')
+    } else {
+      soundManager.play('quizWrong')
     }
 
     // Show two random photos after each answer (except the last question)
